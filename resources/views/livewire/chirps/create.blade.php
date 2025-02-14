@@ -19,6 +19,12 @@ new class extends Component {
         }catch(Exception $e){
             dd($e->getMessage());
         }
+
+        //reset the message
+        $this->message = '';
+
+        //dispatch event everytime user create new message
+        $this->dispatch('chirp-created');
     }
 }; ?>
 
