@@ -2,6 +2,7 @@
 
 use App\Models\Chirp;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
 new class extends Component {
@@ -9,6 +10,15 @@ new class extends Component {
 
     public function mount(){
         //using eager load when retreive all chirps and retreive the user id
+        $this->chirps = Chirp::with('user')
+            ->latest()
+            ->get();
+        $this->getChirps();
+    }
+
+    //listen the dispatch event
+    #[On('chirp-created')]
+    public function getChirps(){
         $this->chirps = Chirp::with('user')
             ->latest()
             ->get();
