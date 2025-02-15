@@ -4,6 +4,7 @@ use App\Models\Chirp;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
+use Carbon\Carbon;
 
 new class extends Component {
 
@@ -39,6 +40,11 @@ new class extends Component {
         $this->editing = null;
         $this->getChirps();
     }
+
+    //get makassar timezone
+    public function convertTimezone($chirp){
+        return Carbon::parse($chirp->created_at)->setTimezone('Asia/Makassar');
+    }
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y"> 
@@ -51,7 +57,7 @@ new class extends Component {
                 <div class="flex justify-between items-center">
                     <div>
                         <span class="text-gray-800">{{ $chirp->user->name }}</span>
-                        <small class="ml-2 text-sm text-gray-600">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
+                        <small class="ml-2 text-sm text-gray-600">{{ $this->convertTimezone($chirp)->format('j M Y, g:i a') }}</small>
                         <!-- check if the chirp is updated or not, if updated show the text edited -->
                         @unless($chirp->created_at->eq($chirp->updated_at))
                             <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
