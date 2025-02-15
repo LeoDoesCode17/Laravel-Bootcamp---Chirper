@@ -31,6 +31,14 @@ new class extends Component {
         $this->editing = $chirp;
         $this->getChirps();
     }
+
+    //Listen the dispatch event from chirps.edit.blade.php
+    #[On('chirp-edit-canceled')]
+    #[On('chirp-updated')]
+    public function disableEditing(){
+        $this->editing = null;
+        $this->getChirps();
+    }
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y"> 
